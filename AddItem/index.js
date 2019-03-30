@@ -1,7 +1,7 @@
 
 var MongoClient = require('mongodb').MongoClient;
 
-module.exports = async function (context, req) {
+module.exports = function (context, req) {
     const response = (client, context) => (status, body) => {
         context.res = {
             status: status,
