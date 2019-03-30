@@ -3,7 +3,7 @@ var MongoClient = require('mongodb').MongoClient;
 
 // using funcpack now
 
-module.exports = function (context, req) {
+module.exports = async function (context, req) {
     MongoClient.connect(process.env.CosmosDBConnectionString, (err, client) => {
         let send = response(client, context);
         if (err) send(500, err.message);
