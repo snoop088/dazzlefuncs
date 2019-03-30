@@ -1,10 +1,19 @@
-export const MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
 
 // using funcpack now
 
 module.exports = function (context, req) {
+    console.log(MongoClient);
     MongoClient.connect(process.env.CosmosDBConnectionString, {useNewUrlParser: true}, (err, client) => {
+        const response = (client, context) => (status, body) => {
+            context.res = {
+                status: status,
+                body: body
+            };
+            client.close();
+            context.done();
+        }
         let send = response(client, context);
         if (err) send(500, err.message);
 
@@ -18,14 +27,4 @@ module.exports = function (context, req) {
                 send(200, JSON.parse(JSON.stringify(result)));
             });
     });
-};
-function response(client, context) {
-    return function (status, body) {
-        context.res = {
-            status: status,
-            body: body
-        };
-        client.close();
-        context.done();
-    };
 };
