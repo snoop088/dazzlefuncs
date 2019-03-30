@@ -10,7 +10,7 @@ module.exports = async function (context, req) {
         client.close();
         context.done();
     }
-    MongoClient.connect(process.env.CosmosDBConnectionString, (err, client) => {
+    MongoClient.connect(process.env.CosmosDBConnectionString, {useNewUrlParser: true}, (err, client) => {
         let send = response(client, context);
         if (err) send(500, err.message);
         let db = client.db('dazzledb');

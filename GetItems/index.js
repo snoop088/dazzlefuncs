@@ -3,8 +3,9 @@ var MongoClient = require('mongodb').MongoClient;
 
 // using funcpack now
 
-module.exports = async function (context, req) {
-    MongoClient.connect(process.env.CosmosDBConnectionString, (err, client) => {
+module.exports = function (context, req) {
+    console.log(MongoClient);
+    MongoClient.connect(process.env.CosmosDBConnectionString, {useNewUrlParser: true}, (err, client) => {
         let send = response(client, context);
         if (err) send(500, err.message);
 
