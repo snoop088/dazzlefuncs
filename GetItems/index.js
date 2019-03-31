@@ -1,11 +1,11 @@
 var MongoClient = require('mongodb').MongoClient;
-
+var assert = require('assert');
 
 // using funcpack now
 
 module.exports = function (context, req) {
-    console.log(MongoClient);
     MongoClient.connect(process.env.CosmosDBConnectionString, {useNewUrlParser: true}, (err, client) => {
+        assert.equal(null, err);
         const response = (client, context) => (status, body) => {
             context.res = {
                 status: status,

@@ -1,5 +1,6 @@
 
 var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
 
 module.exports = function (context, req) {
     const response = (client, context) => (status, body) => {
@@ -11,6 +12,7 @@ module.exports = function (context, req) {
         context.done();
     }
     MongoClient.connect(process.env.CosmosDBConnectionString, {useNewUrlParser: true}, (err, client) => {
+        assert.equal(null, err);
         let send = response(client, context);
         if (err) send(500, err.message);
         let db = client.db('dazzledb');
@@ -25,7 +27,6 @@ module.exports = function (context, req) {
             },
             (err, items) => {
                 if (err) send(500, err.message);
-                console.log('items', items);
                 send(200, item);
             }
         );
