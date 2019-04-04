@@ -4,6 +4,7 @@ var assert = require('assert');
 // using funcpack now
 
 module.exports = function (context, req) {
+    console.log(process.env.CosmosDBConnectionString);
     MongoClient.connect(process.env.CosmosDBConnectionString, {useNewUrlParser: true}, (err, client) => {
         assert.equal(null, err);
         const response = (client, context) => (status, body) => {
