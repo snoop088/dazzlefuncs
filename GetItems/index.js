@@ -7,7 +7,7 @@ module.exports = async function (context, req) {
     context.log(process.env.CosmosDBConnectionString);
     context.log('JavaScript HTTP trigger function processed a request.');
     context.res = {
-        status: 400,
+        status: 200,
         body: "Please pass a name on the query string or in the request body"
     };
     // MongoClient.connect(process.env.CosmosDBConnectionString, {useNewUrlParser: true}, (err, client) => {
