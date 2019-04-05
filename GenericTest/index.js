@@ -3,7 +3,7 @@ var assert = require('assert');
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
     MongoClient.connect(process.env.CosmosDBConnectionString, (err, client) => {
-        assert.equal(null, err);
+        // assert.equal(null, err);
         context.res = {
             status: 200,
             body: 'WTF'
