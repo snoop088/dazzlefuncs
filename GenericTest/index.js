@@ -8,7 +8,7 @@ module.exports = function (context, req) {
             status: 200,
             body: 'WTF'
         }
-        client.close();
+        context.done();
         // const response = (client, context) => (status, body) => {
         //     context.res = {
         //         status: status,
