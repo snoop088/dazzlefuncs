@@ -10,7 +10,7 @@ module.exports = function (context, req) {
         // }
         // context.done();
         context.log('here');
-        assert.equal(null, err);
+        // assert.equal(null, err);
         if (err) {
             send(500, err.message);
         }
