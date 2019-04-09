@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
-module.exports = async function (context, req) {
+module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
     MongoClient.connect(process.env.CosmosDBConnectionString, (err, client) => {
         // assert.equal(null, err);
@@ -16,6 +16,7 @@ module.exports = async function (context, req) {
                 status: status,
                 body: body
             };
+            context.done();
         }
         // const response = (client, context) => (status, body) => {
         //     context.log('success result: ' + body);
@@ -32,13 +33,13 @@ module.exports = async function (context, req) {
 
         let db = client.db('dazzledb');
 
-        await db
+        db
             .collection('items')
             .find({})
             .toArray((err, result) => {
                 if (err) send(500, err.message);
                 send(200, JSON.parse(JSON.stringify(result)));
             });
-        context.done();
+        
     });
 };
