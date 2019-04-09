@@ -12,6 +12,7 @@ module.exports = function (context, req) {
         context.log('here');
         // assert.equal(null, err);
         if (err) {
+            context.log('err:' + err);
             send(500, err.message);
         }
         const send = (status, body) => {
@@ -36,7 +37,7 @@ module.exports = function (context, req) {
         // if (err) send(500, err.message);
 
         let db = client.db('dazzledb');
-
+        context.log(db);
         db
             .collection('items')
             .find({})
