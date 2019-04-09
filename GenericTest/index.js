@@ -11,10 +11,7 @@ module.exports = function (context, req) {
         // context.done();
         context.log('here:', err, client);
         // assert.equal(null, err);
-        if (err) {
-            context.log('err:' + err);
-            send(500, err.message);
-        }
+
         const send = (status, body) => {
             context.log('success result: ' + body);
             context.res = {
@@ -22,6 +19,23 @@ module.exports = function (context, req) {
                 body: body
             };
             context.done();
+        }
+        if (err) {
+            context.log('err:' + err);
+            send(500, err.message);
+        } else {
+            let db = client.db('dazzledb');
+            context.log(db);
+            db
+                .collection('items')
+                .find({})
+                .toArray((err, result) => {
+                    if (err) {
+                        send(500, err.message);
+                    } else {
+                        send(200, JSON.parse(JSON.stringify(result)));
+                    }
+                });
         }
         // const response = (client, context) => (status, body) => {
         //     context.log('success result: ' + body);
@@ -36,15 +50,7 @@ module.exports = function (context, req) {
         // context.log('err: ' + err);
         // if (err) send(500, err.message);
 
-        let db = client.db('dazzledb');
-        context.log(db);
-        db
-            .collection('items')
-            .find({})
-            .toArray((err, result) => {
-                if (err) send(500, err.message);
-                send(200, JSON.parse(JSON.stringify(result)));
-            });
-        
+
+
     });
 };
