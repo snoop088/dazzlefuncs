@@ -2,18 +2,9 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
-    MongoClient.connect(process.env.CosmosDBConnectionString, (err, client) => {
-        // assert.equal(null, err);
-        // context.res = {
-        //     status: 200,
-        //     body: 'WTF'
-        // }
-        // context.done();
-        context.log('here:' + process.env.CosmosDBConnectionString);
-        // assert.equal(null, err);
+    MongoClient.connect(process.env.CosmosDBConnectionString, { useNewUrlParser: true }, (err, client) => {
 
         const send = (status, body) => {
-            context.log('success result: ' + body);
             context.res = {
                 status: status,
                 body: body
@@ -37,20 +28,6 @@ module.exports = function (context, req) {
                     }
                 });
         }
-        // const response = (client, context) => (status, body) => {
-        //     context.log('success result: ' + body);
-        //     context.res = {
-        //         status: status,
-        //         body: body
-        //     };
-        //     client.close();
-        //     context.done();
-        // }
-        // let send = response(client, context);
-        // context.log('err: ' + err);
-        // if (err) send(500, err.message);
-
-
 
     });
 };
