@@ -10,6 +10,10 @@ module.exports = function (context, req) {
         // }
         // context.done();
         context.log('here');
+        assert.equal(null, err);
+        if (err) {
+            send(500, err.message);
+        }
         const send = (status, body) => {
             context.log('success result: ' + body);
             context.res = {
