@@ -9,7 +9,7 @@ module.exports = function (context, req) {
         //     body: 'WTF'
         // }
         // context.done();
-        context.log('here');
+        context.log('here:', err, client);
         // assert.equal(null, err);
         if (err) {
             context.log('err:' + err);
