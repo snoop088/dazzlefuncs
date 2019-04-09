@@ -9,7 +9,7 @@ module.exports = function (context, req) {
         //     body: 'WTF'
         // }
         // context.done();
-        context.log('here:', err, client);
+        context.log('here:' + process.env.CosmosDBConnectionString);
         // assert.equal(null, err);
 
         const send = (status, body) => {
