@@ -1,5 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
+
 module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
     MongoClient.connect(process.env.CosmosDBConnectionString, { useNewUrlParser: true }, (err, client) => {
