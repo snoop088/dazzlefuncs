@@ -1,36 +1,33 @@
-// var MongoClient = require('mongodb').MongoClient;
-// var assert = require('assert');
+var MongoClient = require('mongodb').MongoClient;
 
-// using funcpack now
-
-module.exports = async function (context, req) {
-    context.log(process.env.CosmosDBConnectionString);
+module.exports = function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
-    context.res = {
-        status: 200,
-        body: "Please pass a name on the query string or in the request body"
-    };
-    // MongoClient.connect(process.env.CosmosDBConnectionString, {useNewUrlParser: true}, (err, client) => {
-    //     assert.equal(null, err);
-    //     const response = (client, context) => (status, body) => {
-    //         context.res = {
-    //             status: status,
-    //             body: body
-    //         };
-    //         client.close();
-    //         context.done();
-    //     }
-    //     let send = response(client, context);
-    //     if (err) send(500, err.message);
+    MongoClient.connect(process.env.CosmosDBConnectionString, { useNewUrlParser: true }, (err, client) => {
 
-    //     let db = client.db('dazzledb');
+        const send = (status, body) => {
+            context.res = {
+                status: status,
+                body: body
+            };
+            context.done();
+        }
+        if (err) {
+            context.log('err:' + err);
+            send(500, err.message);
+        } else {
+            let db = client.db('dazzledb');
+            context.log(db);
+            db
+                .collection('items')
+                .find({})
+                .toArray((err, result) => {
+                    if (err) {
+                        send(500, err.message);
+                    } else {
+                        send(200, JSON.parse(JSON.stringify(result)));
+                    }
+                });
+        }
 
-    //     db
-    //         .collection('items')
-    //         .find({})
-    //         .toArray((err, result) => {
-    //             if (err) send(500, err.message);
-    //             send(200, JSON.parse(JSON.stringify(result)));
-    //         });
-    // });
+    });
 };
