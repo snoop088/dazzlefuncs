@@ -1,4 +1,26 @@
 {
   "$schema": "http://json.schemastore.org/proxies",
-  "proxies": {}
+  "proxies": {
+      "GET": {
+          "matchCondition": {
+              "route": "api/items",
+              "methods": [
+                  "GET"
+              ]
+          },
+          "backendUri": "https://localhost/api/GetItems"
+      },
+      "INSERT": {
+          "matchCondition": {
+              "route": "api/new",
+              "methods": [
+                  "POST"
+              ]
+          },
+          "backendUri": "https://localhost/api/AddItem",
+          "requestOverrides": {
+              "backend.request.method": "post"
+          }
+      }
+  }
 }
