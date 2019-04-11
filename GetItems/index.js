@@ -9,7 +9,7 @@ module.exports = function (context, req) {
                 status: status,
                 body: body
             };
-            context.done();
+            context.done(); // comment
         }
         if (err) {
             context.log('err:' + err);
